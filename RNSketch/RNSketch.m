@@ -39,7 +39,6 @@
     _eventDispatcher = eventDispatcher;
     _path = [UIBezierPath bezierPath];
 
-    // TODO: Find a way to get an functionnal external 'clear button'
     [self initClearButton];
   }
 
@@ -50,6 +49,11 @@
 {
   [super layoutSubviews];
   [self drawBitmap];
+}
+
+- (void)setClearButtonHidden:(BOOL)hidden
+{
+  _clearButton.hidden = hidden;
 }
 
 
