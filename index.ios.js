@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 
-const { func, number, string, bool } = React.PropTypes;
+const { func, number, string } = React.PropTypes;
 
 const SketchManager = NativeModules.RNSketchManager || {};
 const BASE_64_CODE = 'data:image/jpg;base64,';
@@ -24,7 +24,6 @@ export default class Sketch extends React.Component {
     fillColor: string,
     onReset: func,
     onUpdate: func,
-    clearButtonHidden: bool,
     strokeColor: string,
     strokeThickness: number,
     style: View.propTypes.style,
@@ -34,7 +33,6 @@ export default class Sketch extends React.Component {
     fillColor: '#ffffff',
     onReset: () => {},
     onUpdate: () => {},
-    clearButtonHidden: false,
     strokeColor: '#000000',
     strokeThickness: 1,
     style: null,
