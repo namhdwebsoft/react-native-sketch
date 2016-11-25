@@ -16,6 +16,5 @@
 - (void)setFillColor:(UIColor *)fillColor;
 - (void)setStrokeColor:(UIColor *)strokeColor;
 - (void)setClearButtonHidden:(BOOL)hidden;
-- (void)clearDrawing;
 
 @end
