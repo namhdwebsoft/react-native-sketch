@@ -34,7 +34,10 @@ RCT_CUSTOM_VIEW_PROPERTY(clearButtonHidden, BOOL, RNSketch)
 {
   [view setClearButtonHidden:json ? [RCTConvert BOOL:json] : NO];
 }
-RCT_EXPORT_VIEW_PROPERTY(strokeThickness, NSInteger)
+RCT_CUSTOM_VIEW_PROPERTY(strokeThickness, NSInteger, RNSketch)
+{
+  [view setStrokeThickness:json ? [RCTConvert NSInteger:json] : 1];
+}
 
 #pragma mark - Lifecycle
 
