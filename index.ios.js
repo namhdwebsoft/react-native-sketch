@@ -34,6 +34,7 @@ export default class Sketch extends React.Component {
   static defaultProps = {
     fillColor: '#ffffff',
     onReset: () => {},
+    onClearPlaceholder: () => {},
     onUpdate: () => {},
     clearButtonHidden: false,
     strokeColor: '#000000',
@@ -45,6 +46,7 @@ export default class Sketch extends React.Component {
   constructor(props) {
     super(props);
     this.onReset = this.onReset.bind(this);
+    this.onClearPlaceholder = this.onClearPlaceholder.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
     this.getBase64Code = this.getBase64Code.bind(this);
   }
@@ -56,6 +58,10 @@ export default class Sketch extends React.Component {
 
   getBase64Code() {
     return `data:image/${this.props.imageType};base64,`;
+  }
+
+  onClearPlaceholder() {
+    this.props.onClearPlaceholder();
   }
 
   onUpdate(e) {
