@@ -17,6 +17,7 @@
 - (void)setStrokeColor:(UIColor *)strokeColor;
 - (void)setStrokeThickness:(NSInteger)strokeThickness;
 - (void)setClearButtonHidden:(BOOL)hidden;
+- (void)setImageType:(NSString *)imageType;
 - (void)clearDrawing;
 
 @end
