@@ -70,6 +70,7 @@ RCT_CUSTOM_VIEW_PROPERTY(imageType, NSString, RNSketch)
 {
   return @[
            @"onReset",
+           @"onClearPlaceholder"
            ];
 }
 

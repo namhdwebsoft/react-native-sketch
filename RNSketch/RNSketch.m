@@ -94,12 +94,10 @@
   UITouch *touch = [touches anyObject];
   _points[0] = [touch locationInView:self];
   
-  // Send event
   NSDictionary *bodyEvent = @{
                               @"target": self.reactTag,
-                              @"image": [self drawingToString],
                               };
-  [_eventDispatcher sendInputEventWithName:@"topChange" body:bodyEvent];
+  [_eventDispatcher sendInputEventWithName:@"onClearPlaceholder" body:bodyEvent];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

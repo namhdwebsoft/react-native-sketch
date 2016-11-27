@@ -24,6 +24,7 @@ export default class Sketch extends React.Component {
     onReset: func,
     onUpdate: func,
     clearButtonHidden: bool,
+    onClearPlaceholder: func,
     strokeColor: string,
     strokeThickness: number,
     style: View.propTypes.style,
@@ -83,6 +84,7 @@ export default class Sketch extends React.Component {
         {...this.props}
         onChange={this.onUpdate}
         onReset={this.onReset}
+        onClearPlaceholder={this.onClearPlaceholder}
         style={[styles.base, this.props.style]}
       />
     );
