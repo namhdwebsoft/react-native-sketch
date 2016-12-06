@@ -23,10 +23,6 @@ RCT_EXPORT_MODULE()
 #pragma mark - Properties
 
 
-RCT_CUSTOM_VIEW_PROPERTY(fillColor, UIColor, RNSketch)
-{
-  [view setFillColor:json ? [RCTConvert UIColor:json] : [UIColor whiteColor]];
-}
 RCT_CUSTOM_VIEW_PROPERTY(strokeColor, UIColor, RNSketch)
 {
   [view setStrokeColor:json ? [RCTConvert UIColor:json] : [UIColor blackColor]];

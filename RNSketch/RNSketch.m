@@ -23,7 +23,6 @@
   uint _counter;
 
   // Configuration settings
-  UIColor *_fillColor;
   UIColor *_strokeColor;
 }
 
@@ -154,13 +153,7 @@
 
 - (void)drawBitmap
 {
-  UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0);
-
-  // If first time, paint background
-  if (!_image) {
-    [_fillColor setFill];
-    [[UIBezierPath bezierPathWithRect:self.bounds] fill];
-  }
+  UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0);
 
   // Draw with context
   [_image drawAtPoint:CGPointZero];
@@ -203,12 +196,6 @@
 
 
 #pragma mark - Setters
-
-
-- (void)setFillColor:(UIColor *)fillColor
-{
-  _fillColor = fillColor;
-}
 
 - (void)setStrokeColor:(UIColor *)strokeColor
 {

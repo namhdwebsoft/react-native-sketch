@@ -13,7 +13,6 @@
 @interface RNSketch : UIView
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispather NS_DESIGNATED_INITIALIZER;
-- (void)setFillColor:(UIColor *)fillColor;
 - (void)setStrokeColor:(UIColor *)strokeColor;
 
 @end
