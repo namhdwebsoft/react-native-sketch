@@ -209,12 +209,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
   // Send event
   if (_onReset) _onReset(@{});
-  if (_onChange) _onChange(@{});
+  if (_onChange) _onChange(@{ @"imageData": nil});
 }
 
-
 #pragma mark - Setters
-
 
 - (void)setFillColor:(UIColor *)fillColor
 {
