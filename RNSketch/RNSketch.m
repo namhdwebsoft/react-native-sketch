@@ -58,7 +58,7 @@
 - (void)initClearButton
 {
   // Clear button
-  CGRect frame = CGRectMake(0, 0, 40, 40);
+  CGRect frame = CGRectMake(0, 0, 50, 50);
   _clearButton = [UIButton buttonWithType:UIButtonTypeSystem];
   _clearButton.frame = frame;
   _clearButton.enabled = false;
@@ -170,7 +170,7 @@
 
 - (NSString *)drawingToString
 {
-  return [UIImageJPEGRepresentation(_image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+  return [UIImagePNGRepresentation(_image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
 
 
