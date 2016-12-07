@@ -19,29 +19,18 @@
 
 RCT_EXPORT_MODULE()
 
+#pragma mark - Events
+
+RCT_EXPORT_VIEW_PROPERTY(onReset, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock);
+
 #pragma mark - Properties
 
-
-RCT_CUSTOM_VIEW_PROPERTY(fillColor, UIColor, RNSketch)
-{
-  [view setFillColor:json ? [RCTConvert UIColor:json] : [UIColor whiteColor]];
-}
-RCT_CUSTOM_VIEW_PROPERTY(strokeColor, UIColor, RNSketch)
-{
-  [view setStrokeColor:json ? [RCTConvert UIColor:json] : [UIColor blackColor]];
-}
-RCT_CUSTOM_VIEW_PROPERTY(clearButtonHidden, BOOL, RNSketch)
-{
-  [view setClearButtonHidden:json ? [RCTConvert BOOL:json] : NO];
-}
-RCT_CUSTOM_VIEW_PROPERTY(strokeThickness, NSInteger, RNSketch)
-{
-  [view setStrokeThickness:json ? [RCTConvert NSInteger:json] : 1];
-}
-RCT_CUSTOM_VIEW_PROPERTY(imageType, NSString, RNSketch)
-{
-  [view setImageType:json ? [RCTConvert NSString:json] : @"jpg"];
-}
+RCT_EXPORT_VIEW_PROPERTY(fillColor, UIColor);
+RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor);
+RCT_EXPORT_VIEW_PROPERTY(clearButtonHidden, BOOL);
+RCT_EXPORT_VIEW_PROPERTY(strokeThickness, NSInteger);
+RCT_EXPORT_VIEW_PROPERTY(imageType, NSString);
 
 #pragma mark - Lifecycle
 
@@ -57,32 +46,27 @@ RCT_CUSTOM_VIEW_PROPERTY(imageType, NSString, RNSketch)
 - (UIView *)view
 {
   if (!self.sketchView) {
-    self.sketchView = [[RNSketch alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+    self.sketchView = [[RNSketch alloc] initWithFrame:CGRectZero];
   }
   
   return self.sketchView;
 }
 
-#pragma mark - Event types
-
-
-- (NSArray *)customDirectEventTypes
-{
-  return @[
-           @"onReset",
-           @"onClearPlaceholder"
-           ];
-}
-
 
 #pragma mark - Exported methods
-
 
 RCT_EXPORT_METHOD(saveImage:(NSString *)encodedImage
                   ofType:(NSString *)imageType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
+  // Strip the Base 64 Code out if it's there.
+  NSString *base64Code = [self.sketchView base64Code];
+  encodedImage = [encodedImage stringByReplacingOccurrencesOfString:base64Code
+                                                         withString:@""
+                                                            options:NULL
+                                                              range:NSMakeRange(0, [base64Code length])];
+  
   // Create image data with base64 source
   NSData *imageData = [[NSData alloc] initWithBase64EncodedString:encodedImage options:NSDataBase64DecodingIgnoreUnknownCharacters];
   if (!imageData) {

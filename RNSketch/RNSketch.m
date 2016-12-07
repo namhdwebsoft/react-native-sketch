@@ -15,31 +15,26 @@
 @implementation RNSketch
 {
   // Internal
-  RCTEventDispatcher *_eventDispatcher;
   UIButton *_clearButton;
   UIBezierPath *_path;
   UIImage *_image;
   CGPoint _points[5];
   uint _counter;
-
-  // Configuration settings
-  UIColor *_fillColor;
-  UIColor *_strokeColor;
-  NSString *_imageType;
 }
 
 
 #pragma mark - UIViewHierarchy methods
 
 
-- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
+- (instancetype)initWithFrame:(CGRect) frame
 {
-  if ((self = [super init])) {
+  if ((self = [super initWithFrame:frame])) {
     // Internal setup
     self.multipleTouchEnabled = NO;
+  
     // For borderRadius property to work (CALayer's cornerRadius).
     self.layer.masksToBounds = YES;
-    _eventDispatcher = eventDispatcher;
+  
     _path = [UIBezierPath bezierPath];
 
     [self initClearButton];
@@ -47,6 +42,8 @@
 
   return self;
 }
+
+RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)layoutSubviews
 {
@@ -93,11 +90,6 @@
   _counter = 0;
   UITouch *touch = [touches anyObject];
   _points[0] = [touch locationInView:self];
-  
-  NSDictionary *bodyEvent = @{
-                              @"target": self.reactTag,
-                              };
-  [_eventDispatcher sendInputEventWithName:@"onClearPlaceholder" body:bodyEvent];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -120,12 +112,7 @@
   [_path removeAllPoints];
   _counter = 0;
 
-  // Send event
-  NSDictionary *bodyEvent = @{
-                              @"target": self.reactTag,
-                              @"image": [self drawingToString],
-                              };
-  [_eventDispatcher sendInputEventWithName:@"topChange" body:bodyEvent];
+  if (_onChange) _onChange(@{ @"imageData": [self drawingToString]});
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -189,15 +176,21 @@
 
 - (NSString *)drawingToString
 {
+  NSString *imageData = nil;
+  
   if ([_imageType isEqualToString:@"jpg"]) {
-    return [UIImageJPEGRepresentation(_image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    imageData = [UIImageJPEGRepresentation(_image, 1) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
   } else if ([_imageType isEqualToString:@"png"]) {
-    return [UIImagePNGRepresentation(_image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    imageData = [UIImagePNGRepresentation(_image) base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+  } else {
+    [NSException raise:@"Invalid image type" format:@"%@ is not a valid image type for exporting the drawing.", _imageType];
   }
   
-  [NSException raise:@"Invalid image type" format:@"%@ is not a valid image type for exporting the drawing.", _imageType];
-  
-  return nil;
+  return [[self base64Code] stringByAppendingString:imageData];
+}
+
+- (NSString *)base64Code {
+  return [NSString stringWithFormat:@"data:image/%@;base64,", self.imageType];
 }
 
 
@@ -215,10 +208,8 @@
   [self setNeedsDisplay];
 
   // Send event
-  NSDictionary *bodyEvent = @{
-                              @"target": self.reactTag,
-                              };
-  [_eventDispatcher sendInputEventWithName:@"onReset" body:bodyEvent];
+  if (_onReset) _onReset(@{});
+  if (_onChange) _onChange(@{});
 }
 
 
@@ -243,6 +234,10 @@
 - (void)setImageType:(NSString *)imageType
 {
   _imageType = imageType;
+}
+
+- (NSString *)getImageType {
+  return _imageType;
 }
 
 @end

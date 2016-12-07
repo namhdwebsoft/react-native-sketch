@@ -21,8 +21,8 @@ export default class Sketch extends React.Component {
 
   static propTypes = {
     fillColor: string,
+    onChange: func,
     onReset: func,
-    onUpdate: func,
     clearButtonHidden: bool,
     onClearPlaceholder: func,
     strokeColor: string,
@@ -33,9 +33,8 @@ export default class Sketch extends React.Component {
 
   static defaultProps = {
     fillColor: '#ffffff',
+    onChange: () => {},
     onReset: () => {},
-    onClearPlaceholder: () => {},
-    onUpdate: () => {},
     clearButtonHidden: false,
     strokeColor: '#000000',
     strokeThickness: 1,
@@ -43,40 +42,11 @@ export default class Sketch extends React.Component {
     imageType: 'jpg'
   };
 
-  constructor(props) {
-    super(props);
-    this.onReset = this.onReset.bind(this);
-    this.onClearPlaceholder = this.onClearPlaceholder.bind(this);
-    this.onUpdate = this.onUpdate.bind(this);
-    this.getBase64Code = this.getBase64Code.bind(this);
-  }
-
-  onReset() {
-    this.props.onUpdate(null);
-    this.props.onReset();
-  }
-
-  getBase64Code() {
-    return `data:image/${this.props.imageType};base64,`;
-  }
-
-  onClearPlaceholder() {
-    this.props.onClearPlaceholder();
-  }
-
-  onUpdate(e) {
-    const { onUpdate, imageType } = this.props;
-
-    onUpdate(`${this.getBase64Code()}${e.nativeEvent.image}`);
-  }
-
   saveImage(image) {
     if (typeof image !== 'string') {
       return Promise.reject('You need to provide a valid base64 encoded image.');
     }
 
-    const base64Code = this.getBase64Code();
-    const src = image.indexOf(base64Code) === 0 ? image.replace(base64Code, '') : image;
     return SketchManager.saveImage(src, this.props.imageType);
   }
 
@@ -88,9 +58,6 @@ export default class Sketch extends React.Component {
     return (
       <RNSketch
         {...this.props}
-        onChange={this.onUpdate}
-        onReset={this.onReset}
-        onClearPlaceholder={this.onClearPlaceholder}
         style={[styles.base, this.props.style]}
       />
     );
