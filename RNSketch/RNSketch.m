@@ -209,7 +209,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
   // Send event
   if (_onReset) _onReset(@{});
-  if (_onChange) _onChange(@{ @"imageData": nil});
+  if (_onChange) _onChange(@{});
 }
 
 #pragma mark - Setters
