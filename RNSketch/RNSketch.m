@@ -191,7 +191,7 @@
   NSDictionary *bodyEvent = @{
                               @"target": self.reactTag,
                               };
-  [_eventDispatcher sendInputEventWithName:@"onReset" body:bodyEvent];
+  [_eventDispatcher sendInputEventWithName:@"topChange" body:bodyEvent];
 }
 
 

@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.2.6] - 2016-12-09
+### Changed
+- Fixed `onReset` callback
+- PNG image output 
+
 ## [v0.2.5] - 2016-12-06
 ### Changed
 - Replaced a `fillColor` property with a `backgroundColor` style to allow drawing with a transparent background  

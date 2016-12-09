@@ -1,6 +1,6 @@
 {
   "name": "react-native-sketch",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A react-native component for touch-based drawing",
   "main": "index.ios.js",
   "dependencies": {},

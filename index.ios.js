@@ -1,16 +1,9 @@
-import React from 'react';
-import {
-  NativeModules,
-  requireNativeComponent,
-  StyleSheet,
-  View,
-} from 'react-native';
+import React from "react";
+import {NativeModules, requireNativeComponent, StyleSheet, View} from "react-native";
 
-const { func, number, string } = React.PropTypes;
-
+const {func, number, string} = React.PropTypes;
 const SketchManager = NativeModules.RNSketchManager || {};
 const BASE_64_CODE = 'data:image/png;base64,';
-
 const styles = StyleSheet.create({
   base: {
     flex: 1,
@@ -19,7 +12,6 @@ const styles = StyleSheet.create({
 });
 
 export default class Sketch extends React.Component {
-
   static propTypes = {
     onReset: func,
     onUpdate: func,
@@ -48,7 +40,11 @@ export default class Sketch extends React.Component {
   }
 
   onUpdate(e) {
-    this.props.onUpdate(`${BASE_64_CODE}${e.nativeEvent.image}`);
+    if (e.nativeEvent.image) {
+      this.props.onUpdate(`${BASE_64_CODE}${e.nativeEvent.image}`);
+    } else {
+      this.onReset();
+    }
   }
 
   saveImage(image) {
@@ -65,7 +61,6 @@ export default class Sketch extends React.Component {
       <RNSketch
         {...this.props}
         onChange={this.onUpdate}
-        onReset={this.onReset}
         style={[styles.base, this.props.style]}
       />
     );
