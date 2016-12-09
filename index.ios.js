@@ -9,7 +9,7 @@ import {
 const { func, number, string } = React.PropTypes;
 
 const SketchManager = NativeModules.RNSketchManager || {};
-const BASE_64_CODE = 'data:image/jpg;base64,';
+const BASE_64_CODE = 'data:image/png;base64,';
 
 const styles = StyleSheet.create({
   base: {
