@@ -8,9 +8,9 @@
 
 #import "RNSketchManager.h"
 #import "RNSketch.h"
-#import "RCTBridge.h"
-#import "RCTConvert.h"
-#import "RCTEventDispatcher.h"
+#import <React/RCTBridge.h>
+#import <React/RCTConvert.h>
+#import <React/RCTEventDispatcher.h>
 
 #define ERROR_IMAGE_INVALID @"ERROR_IMAGE_INVALID"
 #define ERROR_FILE_CREATION @"ERROR_FILE_CREATION"
