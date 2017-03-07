@@ -14,9 +14,6 @@
 @property (nonatomic, strong) UIColor *strokeColor;
 @property (nonatomic, assign) NSInteger strokeThickness;
 
-
-@interface RNSketchManager : RCTViewManager
-
 @property (strong) RNSketch *sketchView;
 
 @end;

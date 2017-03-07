@@ -28,12 +28,10 @@ RCT_CUSTOM_VIEW_PROPERTY(strokeColor, UIColor, RNSketch)
 {
   [view setStrokeColor:json ? [RCTConvert UIColor:json] : [UIColor blackColor]];
 }
-RCT_EXPORT_VIEW_PROPERTY(strokeThickness, NSInteger)
   
 #pragma mark - Properties
 
 RCT_EXPORT_VIEW_PROPERTY(fillColor, UIColor);
-RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor);
 RCT_EXPORT_VIEW_PROPERTY(clearButtonHidden, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(strokeThickness, NSInteger);
 RCT_EXPORT_VIEW_PROPERTY(imageType, NSString);
