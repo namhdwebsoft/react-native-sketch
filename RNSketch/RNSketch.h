@@ -20,7 +20,6 @@
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 
 // Properties
-@property (nonatomic, strong) UIColor *fillColor;
 @property (nonatomic, strong) UIColor *strokeColor;
 @property (nonatomic, assign) NSInteger strokeThickness;
 @property (nonatomic, assign) BOOL clearButtonHidden;
