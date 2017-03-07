@@ -1,9 +1,16 @@
-import React from "react";
-import {NativeModules, requireNativeComponent, StyleSheet, View} from "react-native";
+
+import React from 'react';
+import {
+  NativeModules,
+  requireNativeComponent,
+  StyleSheet,
+  View,
+} from 'react-native';
+
+const { func, number, string, bool, oneOf } = React.PropTypes;
 
 const {func, number, string} = React.PropTypes;
 const SketchManager = NativeModules.RNSketchManager || {};
-const BASE_64_CODE = 'data:image/png;base64,';
 const styles = StyleSheet.create({
   base: {
     flex: 1,
@@ -13,20 +20,26 @@ const styles = StyleSheet.create({
 
 export default class Sketch extends React.Component {
   static propTypes = {
+    onChange: func,
     onReset: func,
-    onUpdate: func,
+    clearButtonHidden: bool,
+    onClearPlaceholder: func,
     strokeColor: string,
     strokeThickness: number,
     style: View.propTypes.style,
+    imageType: oneOf(['jpg', 'png'])
   };
 
   static defaultProps = {
+    onChange: () => {},
     onReset: () => {},
-    onUpdate: () => {},
+    clearButtonHidden: false,
     strokeColor: '#000000',
     strokeThickness: 1,
     style: null,
+    imageType: 'jpg'
   };
+
 
   constructor(props) {
     super(props);
@@ -52,8 +65,11 @@ export default class Sketch extends React.Component {
       return Promise.reject('You need to provide a valid base64 encoded image.');
     }
 
-    const src = image.indexOf(BASE_64_CODE) === 0 ? image.replace(BASE_64_CODE, '') : image;
-    return SketchManager.saveImage(src);
+    return SketchManager.saveImage(src, this.props.imageType);
+  }
+
+  clear() {
+    return SketchManager.clear();
   }
 
   render() {
