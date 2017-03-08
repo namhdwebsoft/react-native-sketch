@@ -60,7 +60,7 @@ class Signature extends Component {
   }
 
   state = {
-    encodedSignature: null,
+    encodedSignatures: [],
   };
 
   /**
@@ -84,10 +84,29 @@ class Signature extends Component {
   /**
    * On every update (touch up from the drawing),
    * you'll receive the base64 representation of the drawing as a callback.
+   * So we store it in an array of all past lines in order to have an undo functionality
    */
   onUpdate(base64Image) {
-    this.setState({ encodedSignature: base64Image });
+    this.setState({ encodedSignatures: [ base64Image, ...this.state.encodedSignatures ] });
   }
+  /**
+   * Since we stored every past image we can undo through them
+   */
+  undo() {
+        const [ first, ...encodedSignatures ] = this.state.encodedSignatures;
+
+        this.setState( { encodedSignatures } )
+
+        if ( encodedSignatures[ 0 ] ) {
+
+            this.sketch.setImage( encodedSignatures[ 0 ] );
+
+        } else {
+
+            // Just clear the screen
+            this.sketch.clear();
+        }
+    }
 
   render() {
     return (
