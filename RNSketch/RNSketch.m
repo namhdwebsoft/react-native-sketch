@@ -208,11 +208,6 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   if (_onChange) _onChange(@{});
 }
 
-- (UIImage *)decodeBase64ToImage:(NSString *)strEncodeData {
-  NSData *data = [[NSData alloc]initWithBase64EncodedString:strEncodeData options:NSDataBase64DecodingIgnoreUnknownCharacters];
-  return [UIImage imageWithData:data];
-}
-
 #pragma mark - Setters
 
 - (void)setStrokeColor:(UIColor *)strokeColor
@@ -236,7 +231,30 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)setImage:(NSString *)image
 {
-  _image = [self decodeBase64ToImage:image];
+  // Strip the Base 64 Code out if it's there.
+    NSString *base64Code = [self base64Code];
+    image = [image stringByReplacingOccurrencesOfString:base64Code
+                                                           withString:@""
+                                                              options:NULL
+                                                                range:NSMakeRange(0, [base64Code length])];
+    
+    // Create image data with base64 source
+    NSData *imageData = [[NSData alloc] initWithBase64EncodedString:image options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    if (imageData!=NULL) {
+        _image = [UIImage imageWithData:imageData];
+        _image = [UIImage imageWithCGImage:[_image CGImage]
+                            scale:(_image.scale * [UIScreen mainScreen].scale)
+                      orientation:(_image.imageOrientation)];
+        
+        
+    }else{
+        NSLog(@"ERR %@",image);
+        _image=NULL;
+    }
+    
+    [self drawBitmap];
+    [self setNeedsDisplay];
 }
 
 @end
