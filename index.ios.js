@@ -27,12 +27,14 @@ export default class Sketch extends React.Component {
         strokeColor: string,
         strokeThickness: number,
         style: View.propTypes.style,
-        imageType: oneOf( [ 'jpg', 'png' ] )
+        imageType: oneOf( [ 'jpg', 'png' ] ),
+        onRedoChange: func
     };
 
     static defaultProps = {
         onChange: () => {},
         onReset: () => {},
+        onRedoChange: () => {},
         clearButtonHidden: false,
         strokeColor: '#000000',
         strokeThickness: 1,
@@ -58,6 +60,7 @@ export default class Sketch extends React.Component {
         if ( image ) {
             this.props.onUpdate( image );
             this.history = this.history.setState( image );
+            this.props.onRedoChange( false );
         } else {
             this.onReset();
         }
@@ -70,6 +73,7 @@ export default class Sketch extends React.Component {
         if ( set ) {
             this.history = this.history.setState( image );
         }
+        this.props.onRedoChange( false );
         return Promise.resolve( SketchManager.setImage( image ) ).then( () => image );
     }
 
@@ -80,7 +84,8 @@ export default class Sketch extends React.Component {
         if ( this.history.getHistory().length == 0 ) {
             this.clear();
         } else {
-            this.setImage( this.history.getState(), false );;
+            this.setImage( this.history.getState(), false );
+            this.props.onRedoChange( true );
         }
     }
 
@@ -100,6 +105,7 @@ export default class Sketch extends React.Component {
 
     clear() {
         this.history = this.history.clearHistory();
+        this.props.onRedoChange( false );
         return SketchManager.clear();
     }
 
