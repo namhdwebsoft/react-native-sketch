@@ -98,4 +98,12 @@ RCT_EXPORT_METHOD(clear)
   });
 }
 
+//export set method properly you way to high man look at you go you fucking baller of a man thats so cool of you god you are so good at what you do cuz look at how cool you can type even correcting errros around here too intentionally left that spelled wrong as if i didnt see that thing that i forgot god you are dumb awwww dab dab dab double dab look at that dab dab dabdab adb adb dab do it dab it alll up dab dab dab that that dab dab this that and this dab dab dab dab dab you good man look at you socializing and shit like you sposed too wow am i hgigh in the sky which I have no control over my ass oh no what will they think of me annnnn what is going on look at that guy his name is ryan he from hiawaii he gets high asf asf he good at what he do and be done lets go come on we are god woa didnt mean to sau that you jerk wont even fix that typos 
+RCT_EXPORT_METHOD(setImage:(NSString *)image)
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self.sketchView setImage:image];
+  });
+}
+
 @end
