@@ -114,7 +114,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   [_path removeAllPoints];
   _counter = 0;
 
-  if (_onChange) _onChange(@{ @"imageData": [self drawingToString]});
+  if (_onChange) _onChange(@{ @"image": [self drawingToString]});
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
