@@ -57,6 +57,14 @@ export default class Sketch extends React.Component {
             this.onReset();
         }
     }
+    setImage( image ) {
+        if ( typeof image !== 'string' ) {
+            return Promise.reject( 'You need to provide a valid base64 encoded image.' );
+        }
+        console.log( SketchManager )
+
+        return SketchManager.setImage( src, this.props.imageType );
+    }
 
     saveImage( image ) {
         if ( typeof image !== 'string' ) {
