@@ -72,9 +72,9 @@ export default class Sketch extends React.Component {
     }
 
     undo( howManyTimes = 1 ) {
-        console.log( JSON.stringify( this.history ) )
+        console.log( this.history )
         this.history = this.history.revert( howManyTimes );
-        console.log( JSON.stringify( this.history ) )
+        console.log( this.history )
 
         if ( this.history.getState() == null || this.history.getState() == '' ) {
             this.setImage( this.history.getState() );
