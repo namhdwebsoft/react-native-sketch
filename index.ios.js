@@ -51,6 +51,7 @@ export default class Sketch extends React.Component {
     }
 
     onUpdate( e ) {
+        console.log( SketchManager )
         if ( e.nativeEvent.image ) {
             this.props.onUpdate( `${e.nativeEvent.image}` );
         } else {
