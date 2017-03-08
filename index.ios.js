@@ -52,7 +52,7 @@ export default class Sketch extends React.Component {
 
     onUpdate( e ) {
         if ( e.nativeEvent.image ) {
-            this.props.onUpdate( `${BASE_64_CODE}${e.nativeEvent.image}` );
+            this.props.onUpdate( `${e.nativeEvent.image}` );
         } else {
             this.onReset();
         }
