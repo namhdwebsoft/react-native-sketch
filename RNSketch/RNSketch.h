@@ -13,6 +13,7 @@
 
 - (void)setStrokeColor:(UIColor *)strokeColor;
 - (void)clearDrawing;
+- (void)setImage:(NSString *)image;
 - (NSString *)base64Code;
 
 // Events

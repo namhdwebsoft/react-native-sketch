@@ -208,6 +208,11 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   if (_onChange) _onChange(@{});
 }
 
+- (UIImage *)decodeBase64ToImage:(NSString *)strEncodeData {
+  NSData *data = [[NSData alloc]initWithBase64EncodedString:strEncodeData options:NSDataBase64DecodingIgnoreUnknownCharacters];
+  return [UIImage imageWithData:data];
+}
+
 #pragma mark - Setters
 
 - (void)setStrokeColor:(UIColor *)strokeColor
@@ -227,6 +232,11 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (NSString *)getImageType {
   return _imageType;
+}
+
+- (void)setImage:(NSString *)image
+{
+  _image = [UIImage decodeBase64ToImage:image];
 }
 
 @end
