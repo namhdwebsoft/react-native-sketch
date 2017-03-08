@@ -5,16 +5,18 @@ import {
     StyleSheet,
     View,
 } from 'react-native';
+import UnDoable from './UnDoable';
 
 const { func, number, string, bool, oneOf } = React.PropTypes;
 
-const SketchManager = NativeModules.RNSketchManager || {};
-const styles = StyleSheet.create( {
-    base: {
-        flex: 1,
-        height: 200,
-    },
-} );
+const SketchManager = NativeModules.RNSketchManager || {},
+    styles = StyleSheet.create( {
+        base: {
+            flex: 1,
+            height: 200,
+        },
+    } );
+
 
 export default class Sketch extends React.Component {
     static propTypes = {
@@ -43,6 +45,7 @@ export default class Sketch extends React.Component {
         super( props );
         this.onReset = this.onReset.bind( this );
         this.onUpdate = this.onUpdate.bind( this );
+        this.history = UnDoable.new( '' )
     }
 
     onReset() {
@@ -51,31 +54,45 @@ export default class Sketch extends React.Component {
     }
 
     onUpdate( e ) {
-        console.log( SketchManager )
-        if ( e.nativeEvent.image ) {
-            this.props.onUpdate( `${e.nativeEvent.image}` );
+        const image = e.nativeEvent.image
+        if ( image ) {
+            this.props.onUpdate( image );
+            this.history = this.history.setState( image );
         } else {
             this.onReset();
         }
     }
+
     setImage( image ) {
         if ( typeof image !== 'string' ) {
             return Promise.reject( 'You need to provide a valid base64 encoded image.' );
         }
-        console.log( SketchManager )
+        this.history = this.history.setState( image );
+        return Promise.resolve( SketchManager.setImage( image ) ).then( () => image );
+    }
 
-        return SketchManager.setImage( image );
+    undo( howManyTimes = 1 ) {
+        this.history = this.history.revert( howManyTimes );
+        this.setImage( this.history.getState() );
+        this.undo();
+    }
+
+    redo( howManyTimes = 1 ) {
+        this.history = this.history.jump( howManyTimes );
+        this.setImage( this.history.getState() );
+        this.undo();
     }
 
     saveImage( image ) {
         if ( typeof image !== 'string' ) {
             return Promise.reject( 'You need to provide a valid base64 encoded image.' );
         }
-
+        this.history = this.history.clearHistory();
         return SketchManager.saveImage( src, this.props.imageType );
     }
 
     clear() {
+        this.history = this.history.clearHistory();
         return SketchManager.clear();
     }
 
