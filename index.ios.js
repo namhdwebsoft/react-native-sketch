@@ -82,7 +82,7 @@ export default class Sketch extends React.Component {
             this.clear();
         }
 
-        this.undo();
+        this.history.undo();
     }
 
     redo( howManyTimes = 1 ) {
