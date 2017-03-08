@@ -74,9 +74,8 @@ export default class Sketch extends React.Component {
     }
 
     undo( howManyTimes = 1 ) {
-        console.log( this.history )
+
         this.history = this.history.revert( howManyTimes );
-        console.log( this.history )
 
         if ( this.history.getHistory().length == 0 ) {
             this.clear();
