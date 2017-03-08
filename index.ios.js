@@ -63,11 +63,13 @@ export default class Sketch extends React.Component {
         }
     }
 
-    setImage( image ) {
+    setImage( image, set = true ) {
         if ( typeof image !== 'string' ) {
             return Promise.reject( 'You need to provide a valid base64 encoded image.' );
         }
-        this.history = this.history.setState( image );
+        if ( set ) {
+            this.history = this.history.setState( image );
+        }
         return Promise.resolve( SketchManager.setImage( image ) ).then( () => image );
     }
 
@@ -79,16 +81,13 @@ export default class Sketch extends React.Component {
         if ( this.history.getHistory().length == 0 ) {
             this.clear();
         } else {
-            this.setImage( this.history.getState() );;
+            this.setImage( this.history.getState(), false );;
         }
-        console.log( this.history )
-
-        this.history.undo();
     }
 
     redo( howManyTimes = 1 ) {
         this.history = this.history.jump( howManyTimes );
-        this.setImage( this.history.getState() );
+        this.setImage( this.history.getState(), false );
         this.history.undo();
     }
 
