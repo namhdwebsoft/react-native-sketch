@@ -64,7 +64,7 @@ export default class Sketch extends React.Component {
         }
         console.log( SketchManager )
 
-        return SketchManager.setImage( src, this.props.imageType );
+        return SketchManager.setImage( image );
     }
 
     saveImage( image ) {

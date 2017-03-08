@@ -236,7 +236,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 - (void)setImage:(NSString *)image
 {
-  _image = [UIImage decodeBase64ToImage:image];
+  _image = [self decodeBase64ToImage:image];
 }
 
 @end
