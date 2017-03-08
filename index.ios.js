@@ -76,10 +76,10 @@ export default class Sketch extends React.Component {
         this.history = this.history.revert( howManyTimes );
         console.log( this.history )
 
-        if ( this.history.getState() == null || this.history.getState() == '' ) {
-            this.setImage( this.history.getState() );
-        } else {
+        if ( this.history.getHistory().length == 0 ) {
             this.clear();
+        } else {
+            this.setImage( this.history.getState() );;
         }
 
         this.history.undo();
@@ -88,7 +88,7 @@ export default class Sketch extends React.Component {
     redo( howManyTimes = 1 ) {
         this.history = this.history.jump( howManyTimes );
         this.setImage( this.history.getState() );
-        this.undo();
+        this.history.undo();
     }
 
     saveImage( image ) {
