@@ -81,6 +81,7 @@ export default class Sketch extends React.Component {
         } else {
             this.setImage( this.history.getState() );;
         }
+        console.log( this.history )
 
         this.history.undo();
     }
