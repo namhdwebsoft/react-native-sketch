@@ -93,7 +93,7 @@ export default class Sketch extends React.Component {
     redo( howManyTimes = 1 ) {
         this.history = this.history.jump( howManyTimes );
         this.setImage( this.history.getState(), false );
-        if ( this.history.getFutue().length > 0 ) {
+        if ( this.history.getFuture().length > 0 ) {
             this.props.onRedoChange( true );
         } else {
             this.props.onRedoChange( false );
