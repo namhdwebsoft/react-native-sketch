@@ -72,8 +72,9 @@ export default class Sketch extends React.Component {
         }
         if ( set ) {
             this.history = this.history.setState( image );
+            this.props.onRedoChange( false );
         }
-        this.props.onRedoChange( false );
+
         return Promise.resolve( SketchManager.setImage( image ) ).then( () => image );
     }
 
@@ -92,7 +93,11 @@ export default class Sketch extends React.Component {
     redo( howManyTimes = 1 ) {
         this.history = this.history.jump( howManyTimes );
         this.setImage( this.history.getState(), false );
-        this.history.undo();
+        if ( this.history.getHistory().length > 0 ) {
+            this.props.onRedoChange( true );
+        } else {
+            this.props.onRedoChange( false );
+        }
     }
 
     saveImage( image ) {
