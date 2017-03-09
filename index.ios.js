@@ -105,7 +105,7 @@ export default class Sketch extends React.Component {
             return Promise.reject( 'You need to provide a valid base64 encoded image.' );
         }
         this.history = this.history.clearHistory();
-        return SketchManager.saveImage( src, this.props.imageType );
+        return SketchManager.saveImage( image, this.props.imageType );
     }
 
     clear() {
