@@ -108,6 +108,10 @@ export default class Sketch extends React.Component {
         return SketchManager.saveImage( image, this.props.imageType );
     }
 
+    saveCurImage() {
+        return this.saveImage( this.history.getState() );
+    }
+
     clear() {
         this.history = this.history.clearHistory();
         this.props.onRedoChange( false );
