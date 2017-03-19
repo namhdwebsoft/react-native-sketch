@@ -101,7 +101,7 @@ export default class Sketch extends React.Component {
     }
 
     saveImage( image ) {
-        if ( typeof image !== 'string' ) {
+        if ( typeof image !== 'string' || image = '' ) {
             return Promise.reject( 'You need to provide a valid base64 encoded image.' );
         }
         this.history = this.history.clearHistory();
